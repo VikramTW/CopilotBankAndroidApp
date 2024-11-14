@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginScreenActivity">
+
+    <activity
+        android:id="@+id/loginScreenActivity"
+        android:name="com.vikram.copilotbank.login.ui.LoginScreenActivity"
+        android:label="LoginScreenActivity">
+        <action
+            android:id="@+id/action_loginScreenActivity_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </activity>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.vikram.copilotbank.features.dashboard.ui.MainActivity"
+        android:label="MainActivity" />
+</navigation>

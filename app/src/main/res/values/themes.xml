@@ -1,0 +1,29 @@
+<resources>
+    <!-- Base application theme -->
+    <style name="Theme.CopilotBank" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary branding color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorPrimaryText</item>
+
+        <!-- Secondary branding color. -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorSecondaryText</item>
+
+        <!-- Error color. -->
+        <item name="colorError">@color/colorError</item>
+
+        <!-- Disabled color. -->
+        <item name="colorOnSurface">@color/colorDisabled</item>
+
+        <!-- Customize your theme here. -->
+        <item name="dividerColor">@color/divideColor</item>
+    </style>
+
+    //Create a new theme for no action bar
+    <style name="Theme.CopilotBank.NoActionBar" parent="Theme.CopilotBank">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>
