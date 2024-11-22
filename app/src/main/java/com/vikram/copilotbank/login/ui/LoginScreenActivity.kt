@@ -44,7 +44,7 @@ import javax.inject.Inject
 // create composable function LoginScreen and set UI for LoginScreenActivity
 // LoginScreen should have two text fields for the user to enter their email and password, and a button to submit the form.
 // You can use the following code as a starting point:
-// coloumn which contains app logo, appname, email and password fields and login button
+// column which contains app logo, app name, email and password fields and login button
 
 
 class LoginScreenActivity : AppCompatActivity() {
@@ -141,8 +141,4 @@ class LoginScreenActivity : AppCompatActivity() {
 
     }
 }
-
-
-
-
 
