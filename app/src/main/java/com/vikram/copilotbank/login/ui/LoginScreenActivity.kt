@@ -46,7 +46,6 @@ import javax.inject.Inject
 // You can use the following code as a starting point:
 // column which contains app logo, app name, email and password fields and login button
 
-
 class LoginScreenActivity : AppCompatActivity() {
 
 
