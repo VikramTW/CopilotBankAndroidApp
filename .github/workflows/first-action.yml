@@ -1,14 +1,18 @@
 name: Main Build
 on: workflow_dispatch
 jobs:
-  first-job:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Print greeting
         run: echo "Hello World!"
-  test: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Code
+        
+      - name: code pull
         uses: actions/checkout@v3
+      
+      - name: set up java
+        uses: actions/setup-java@v3
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2.0.10
 
