@@ -4,8 +4,6 @@ jobs:
      first_ job: 
                 runs_on: ubuntu-latest
                 steps:
-                    -name: Print Greeting
-                      run: echo "Hello GitHub Action"
                     -name: Print Goodbye
                       run: echo "Done, Bye"
 
