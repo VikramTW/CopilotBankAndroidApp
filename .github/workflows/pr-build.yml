@@ -1,12 +1,14 @@
-name: Main Build
+name: PR Build
 on: workflow_dispatch
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unit tests
+        run: echo "Run Unit tests"
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Print greeting
-        run: echo "Hello World!"
-        
       - name: code pull
         uses: actions/checkout@v3
       
