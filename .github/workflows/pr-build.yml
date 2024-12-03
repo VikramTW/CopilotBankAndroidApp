@@ -21,3 +21,6 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2.0.10
 
+      - name: Debug Build
+        run: ./gradlew build
+
