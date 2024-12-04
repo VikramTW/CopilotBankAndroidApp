@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Unit tests
-        run: echo "Run Unit tests"
+        run: ./gradlew testDebugUnitTest
   build:
     runs-on: ubuntu-latest
     needs: [test]
