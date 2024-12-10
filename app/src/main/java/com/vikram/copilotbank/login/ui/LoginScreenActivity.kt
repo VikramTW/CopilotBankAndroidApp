@@ -3,6 +3,7 @@ package com.vikram.copilotbank.login.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,9 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,15 +33,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.vikram.copilotbank.R
-import com.vikram.copilotbank.database.BankDatabase
 import com.vikram.copilotbank.widgets.PrimaryButton
 import com.vikram.copilotbank.widgets.RoundedTextField
 import com.vikram.copilotbank.widgets.SecondaryButton
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+
 
 // create a new AppCompatActivity called LoginScreenActivity in the login.ui package
 // create composable function LoginScreen and set UI for LoginScreenActivity
@@ -46,10 +45,10 @@ import javax.inject.Inject
 // You can use the following code as a starting point:
 // column which contains app logo, app name, email and password fields and login button
 
+@AndroidEntryPoint
 class LoginScreenActivity : AppCompatActivity() {
 
-
-    lateinit var database: BankDatabase
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +70,36 @@ class LoginScreenActivity : AppCompatActivity() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            val state by loginViewModel.loginState.collectAsState()
+            when {
+                state.isLoading -> {
+                    Column (
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colors.error,
+                            modifier = Modifier
+                                .size(50.dp)
+                                .align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+                state.success -> {
+                    Toast.makeText(
+                        context,
+                        "Login successful",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                state.error.isNotEmpty() -> {
+                    Toast.makeText(
+                        context,
+                        "Invalid credentials",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = "App Logo",
@@ -108,7 +137,7 @@ class LoginScreenActivity : AppCompatActivity() {
                 PrimaryButton(
                     text = "Login",
                     onClick = {
-                        lifecycleScope.launch {
+                        /*lifecycleScope.launch {
                             val customer = database.customerDao().getCustomerById(email.toInt())
                             if (customer != null && customer.password == password) {
                                 Toast.makeText(
@@ -123,7 +152,11 @@ class LoginScreenActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                        }
+                        }*/
+                        val loginIntent = LoginIntent.Login
+                        loginIntent.username = email
+                        loginIntent.password = password
+                        loginViewModel.handleIntent(loginIntent)
                     },
                     modifier = Modifier.weight(1f)
                 )
