@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".features.dashboard.ui.MainActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

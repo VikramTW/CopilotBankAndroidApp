@@ -8,4 +8,6 @@
     <color name="colorDisabled">#DCDCDC</color>
     <color name="colorError">#FF5722</color>
     <color name="divideColor">#E8E8E8</color>
+
+    <color name="white">#FFFFFFFF</color>
 </resources>

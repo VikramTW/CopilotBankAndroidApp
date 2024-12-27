@@ -2,19 +2,35 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginScreenActivity">
+    app:startDestination="@id/dashBoardScreen">
 
     <activity
         android:id="@+id/loginScreenActivity"
         android:name="com.vikram.copilotbank.login.ui.LoginScreenActivity"
         android:label="LoginScreenActivity">
-        <action
-            android:id="@+id/action_loginScreenActivity_to_mainActivity"
-            app:destination="@id/mainActivity" />
     </activity>
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.vikram.copilotbank.features.dashboard.ui.MainActivity"
+        android:name="com.vikram.copilotbank.MainActivity"
         android:label="MainActivity" />
+
+    <fragment
+        android:id="@+id/dashBoardScreen"
+        android:name="com.vikram.copilotbank.features.dashboard.ui.DashBoardFragment"
+        android:label="dashBoard_fragment">
+        <action
+            android:id="@+id/action_dashBoardScreen_to_profileScreen"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/profileScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileScreen"
+        android:name="com.vikram.copilotbank.features.profile.ui.ProfileFragment"
+        android:label="profile_fragment"
+        />
 </navigation>

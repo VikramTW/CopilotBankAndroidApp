@@ -1,5 +1,6 @@
 package com.vikram.copilotbank.login.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -17,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,9 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.vikram.copilotbank.R
+import com.vikram.copilotbank.MainActivity
+import com.vikram.copilotbank.widgets.Loader
 import com.vikram.copilotbank.widgets.PrimaryButton
 import com.vikram.copilotbank.widgets.RoundedTextField
 import com.vikram.copilotbank.widgets.SecondaryButton
@@ -53,44 +56,16 @@ class LoginScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LoginScreen()
-        }
-    }
-
-
-    @Composable
-    fun LoginScreen() {
-        val context = LocalContext.current
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+            val context = LocalContext.current
             val state by loginViewModel.loginState.collectAsState()
             when {
                 state.isLoading -> {
-                    Column (
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        CircularProgressIndicator(
-                            color = MaterialTheme.colors.error,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .align(Alignment.CenterHorizontally)
-                        )
-                    }
+                    Loader()
                 }
                 state.success -> {
-                    Toast.makeText(
-                        context,
-                        "Login successful",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 state.error.isNotEmpty() -> {
                     Toast.makeText(
@@ -100,6 +75,22 @@ class LoginScreenActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+            LoginScreen()
+        }
+    }
+
+
+    @Composable
+    fun LoginScreen() {
+        var email by remember { mutableStateOf("1234") }
+        var password by remember { mutableStateOf("4321") }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = "App Logo",
@@ -108,6 +99,7 @@ class LoginScreenActivity : AppCompatActivity() {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "CoPilot Bank",
+                fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.h5
             )
             Spacer(modifier = Modifier.height(32.dp))
@@ -137,22 +129,6 @@ class LoginScreenActivity : AppCompatActivity() {
                 PrimaryButton(
                     text = "Login",
                     onClick = {
-                        /*lifecycleScope.launch {
-                            val customer = database.customerDao().getCustomerById(email.toInt())
-                            if (customer != null && customer.password == password) {
-                                Toast.makeText(
-                                    context,
-                                    "Login successful",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Invalid credentials",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }*/
                         val loginIntent = LoginIntent.Login
                         loginIntent.username = email
                         loginIntent.password = password
